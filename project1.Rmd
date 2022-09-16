@@ -104,6 +104,8 @@ Normal Curve of BloodPressure:
 curve(dnorm(x,round(mean(bp),0),round(sd(bp),0)),from=0,to=140,ylab="Density",main="Normal Curve of Blood Pressure")
 
 ```
+
+
 68% people's BloodPressure is in the range [58, 83]
 ```{r}
 mean(bp)-sd(bp)
@@ -153,6 +155,8 @@ Normal Curve of Glucose:
 curve(dnorm(x,round(mean(glucose),0),round(sd(glucose),0)),from=0,to=240,ylab="Density",main="Normal Curve of Glucose")
 
 ```
+
+
 68% people's Glucose is in the range [91, 153]
 ```{r}
 mean(glucose)-sd(glucose)
@@ -174,7 +178,7 @@ Glucose and BloodPressure
 
 Scatter Plot:
 ```{r}
-plot(bp, glucose)
+plot(glucose, bp, xlab = "Glucose (mg/dL)",ylab = "BP (mm Hg)")
 
 ```
 correlation coefficient
@@ -199,24 +203,24 @@ heatmap(table(glucose, bp), Rowv = NA, Colv = NA)
 Linear model between glucose and BloodPressure:
 
 ```{r}
-lm(glucose~bp)
+lm(bp~glucose)
 ```
 Thus The equation of the regression line is
 
-      Glucose = 85.98 + 0.52 * BloodPressure
+      BloodPressure = 60.23 + 0.085 * Glucose
       
       
 ```{r}
-plot(bp, glucose)
-abline(lm(glucose~bp))
+plot(glucose, bp, xlab = "Glucose (mg/dL)",ylab = "BP (mm Hg)")
+abline(lm(bp~glucose))
 
 ```
 
 Diagram of the Residual
 ```{r}
 
-l = lm( glucose ~ bp)
-plot(bp, l$residuals)
+l = lm( bp ~ glucose)
+plot(glucose, l$residuals)
 abline(h=0, col = "red")
 
 ```
@@ -287,6 +291,13 @@ The IQR Value of Insulin
 ```{r}
 IQR(ins)
 ```
+Noraml curve:
+
+```{r}
+curve(dnorm(x,round(mean(ins),0),round(sd(ins),0)),from=0,to=312,ylab="Density",main="Normal Curve of Insulin")
+
+```
+
 
 Glucose:
 
