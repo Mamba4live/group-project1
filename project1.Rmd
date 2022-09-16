@@ -66,7 +66,7 @@ bp = f$BloodPressure
 
 
 ```
-BloodPressure:
+Blood Pressure:
 ```{r}
 ## write code here
 
@@ -79,49 +79,54 @@ boxplot(bp,horizontal = T)
 
 ```
 
-The mean Value of BloodPressure
+The mean Value of Blood Pressure
 ```{r}
 mean(bp)
 ```
-The standard deviation of BloodPressure
+The standard deviation of Blood Pressure
 ```{r}
 
 sd(bp)
 ```
 
-The median Value of BloodPressure
+The median Value of Blood Pressure
 ```{r}
 median(bp)
 ```
 
-The IQR Value of BloodPressure
+The IQR Value of Blood Pressure
 ```{r}
 IQR(bp)
 ```
 
-Normal Curve of BloodPressure:
+Normal Curve of Blood Pressure:
 ```{r}
 curve(dnorm(x,round(mean(bp),0),round(sd(bp),0)),from=0,to=140,ylab="Density",main="Normal Curve of Blood Pressure")
 
 ```
 
 
-68% people's BloodPressure is in the range [58, 83]
+68% people's Blood Pressure is in the range [58, 83]
 ```{r}
 mean(bp)-sd(bp)
 mean(bp)+sd(bp)
 
 ```
-95% people's BloodPressure is in the range [46, 96]
+95% people's Blood Pressure is in the range [46, 96]
 ```{r}
 mean(bp)-2*sd(bp)
 mean(bp)+2*sd(bp)
 ```
-99.7% people's BloodPressure is in the range [33, 108]
+99.7% people's Blood Pressure is in the range [33, 108]
 ```{r}
 mean(bp)-3*sd(bp)
 mean(bp)+3*sd(bp)
 ```
+the rate of people with abnormal Blood Pressure
+```{r}
+pnorm(90,mean = mean(bp),sd = sd(bp),lower.tail = FALSE)
+```
+
 Glucose:
 
 ```{r}
@@ -174,6 +179,12 @@ mean(glucose)-3*sd(glucose)
 mean(glucose)+3*sd(glucose)
 ```
 
+
+the rate of people with abnormal Glucose
+```{r}
+pnorm(140 ,mean = mean(glucose),sd = sd(glucose),lower.tail = FALSE)
+```
+
 Glucose and BloodPressure
 
 Scatter Plot:
@@ -194,8 +205,8 @@ xSD=sd(glucose)
 xstd=x1/xSD
 
 r=mean(ystd*xstd)
+r
 ```
-
 HeatMap:
 ```{r}
 heatmap(table(glucose, bp), Rowv = NA, Colv = NA)
@@ -293,7 +304,6 @@ IQR(ins)
 ```
 
 
-
 Glucose:
 
 ```{r}
@@ -343,6 +353,12 @@ mean(glucose)+2*sd(glucose)
 mean(glucose)-3*sd(glucose)
 mean(glucose)+3*sd(glucose)
 ```
+
+the rate of people with abnormal Glucose
+```{r}
+pnorm(140 ,mean = mean(glucose),sd = sd(glucose),lower.tail = FALSE)
+```
+
 
 Insulin and Glucose
 
