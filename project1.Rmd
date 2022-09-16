@@ -291,12 +291,7 @@ The IQR Value of Insulin
 ```{r}
 IQR(ins)
 ```
-Noraml curve:
 
-```{r}
-curve(dnorm(x,round(mean(ins),0),round(sd(ins),0)),from=0,to=312,ylab="Density",main="Normal Curve of Insulin")
-
-```
 
 
 Glucose:
