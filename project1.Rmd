@@ -183,19 +183,19 @@ plot(glucose, bp, xlab = "Glucose (mg/dL)",ylab = "BP (mm Hg)")
 ```
 correlation coefficient
 ```{r}
-xbar=mean(bp)
-x1=bp-mean(bp)
-xSD=sd(bp)
-xstd=x1/xSD
-
-ybar=mean(glucose)
-y1=glucose-mean(glucose)
-ySD=sd(glucose)
+ybar=mean(bp)
+y1=bp-mean(bp)
+ySD=sd(bp)
 ystd=y1/ySD
 
-r=mean(xstd*ystd)
-r
+xbar=mean(glucose)
+x1=glucose-mean(glucose)
+xSD=sd(glucose)
+xstd=x1/xSD
+
+r=mean(ystd*xstd)
 ```
+
 HeatMap:
 ```{r}
 heatmap(table(glucose, bp), Rowv = NA, Colv = NA)
