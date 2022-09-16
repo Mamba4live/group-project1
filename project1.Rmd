@@ -220,7 +220,7 @@ Diagram of the Residual
 ```{r}
 
 l = lm( bp ~ glucose)
-plot(glucose, l$residuals)
+plot(glucose, l$residuals,xlab = "Glucose (mg/dL)")
 abline(h=0, col = "red")
 
 ```
