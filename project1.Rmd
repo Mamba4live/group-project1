@@ -1,6 +1,6 @@
 ---
 title: "Relation among Glucose , Insulin and BloodPressure"
-author: "Yinbo Zhao 520173668"
+author: "Yinbo Zhao 520173668" "Tierui Yang 520197398"
 subtitle: "Project 1"
 date: "University of Sydney | MATH1005 | Lab Class 22"
 output:
@@ -44,11 +44,9 @@ Insert text and analysis.
 ```{r}
 ## read data 
 forigin = read.csv("data/diabetes.csv")
-
-
 ##remove value = 0 reasonably
 f=data.frame(forigin)
-f<-f[which(forigin$Glucose!=0),]
+f<-f[which(f$Glucose!=0),]
 f<-f[which(f$BloodPressure!=0),]
 f<-f[which(f$SkinThickness!=0),]
 f<-f[which(f$Insulin!=0),]
@@ -56,36 +54,27 @@ f<-f[which(f$BMI!=0),]
 f<-f[which(f$DiabetesPedigreeFunction!=0),]
 f<-f[which(f$Age!=0),]
 rownames(f)<-NULL
-
-
-
 ## show classification of variables
 str(f)
 glucose = f$Glucose
 bp = f$BloodPressure
-
-
 ```
+
 Blood Pressure:
 ```{r}
 ## write code here
-
-
-
 par(mfrow = c(1,2))
 hist(bp)
 boxplot(bp,horizontal = T)
-
-
 ```
 
 The mean Value of Blood Pressure
 ```{r}
 mean(bp)
 ```
+
 The standard deviation of Blood Pressure
 ```{r}
-
 sd(bp)
 ```
 
@@ -102,7 +91,6 @@ IQR(bp)
 Normal Curve of Blood Pressure:
 ```{r}
 curve(dnorm(x,round(mean(bp),0),round(sd(bp),0)),from=0,to=140,ylab="Density",main="Normal Curve of Blood Pressure")
-
 ```
 
 
@@ -110,21 +98,25 @@ curve(dnorm(x,round(mean(bp),0),round(sd(bp),0)),from=0,to=140,ylab="Density",ma
 ```{r}
 mean(bp)-sd(bp)
 mean(bp)+sd(bp)
-
 ```
+
 95% people's Blood Pressure is in the range [46, 96]
 ```{r}
 mean(bp)-2*sd(bp)
 mean(bp)+2*sd(bp)
 ```
+
 99.7% people's Blood Pressure is in the range [33, 108]
 ```{r}
 mean(bp)-3*sd(bp)
 mean(bp)+3*sd(bp)
 ```
+
 the rate of people with abnormal Blood Pressure
 ```{r}
-pnorm(90,mean = mean(bp),sd = sd(bp),lower.tail = FALSE)
+abbp=data.frame(bp)
+abbp <- abbp[which(bp>=90),]
+length(abbp)/length(bp)
 ```
 
 Glucose:
@@ -155,10 +147,10 @@ The IQR Value of Glucose
 ```{r}
 IQR(glucose)
 ```
+
 Normal Curve of Glucose:
 ```{r}
 curve(dnorm(x,round(mean(glucose),0),round(sd(glucose),0)),from=0,to=240,ylab="Density",main="Normal Curve of Glucose")
-
 ```
 
 
@@ -166,13 +158,14 @@ curve(dnorm(x,round(mean(glucose),0),round(sd(glucose),0)),from=0,to=240,ylab="D
 ```{r}
 mean(glucose)-sd(glucose)
 mean(glucose)+sd(glucose)
-
 ```
+
 95% people's Glucose is in the range [61, 184]
 ```{r}
 mean(glucose)-2*sd(glucose)
 mean(glucose)+2*sd(glucose)
 ```
+
 99.7% people's Glucose is in the range [30, 215]
 ```{r}
 mean(glucose)-3*sd(glucose)
@@ -182,7 +175,9 @@ mean(glucose)+3*sd(glucose)
 
 the rate of people with abnormal Glucose
 ```{r}
-pnorm(140 ,mean = mean(glucose),sd = sd(glucose),lower.tail = FALSE)
+abglucose=data.frame(glucose)
+abglucose <- abglucose[which(glucose>=140),]
+length(abglucose)/length(glucose)
 ```
 
 Glucose and BloodPressure
@@ -190,32 +185,33 @@ Glucose and BloodPressure
 Scatter Plot:
 ```{r}
 plot(glucose, bp, xlab = "Glucose (mg/dL)",ylab = "BP (mm Hg)")
-
 ```
+
 correlation coefficient
 ```{r}
 ybar=mean(bp)
 y1=bp-mean(bp)
 ySD=sd(bp)
 ystd=y1/ySD
-
 xbar=mean(glucose)
 x1=glucose-mean(glucose)
 xSD=sd(glucose)
 xstd=x1/xSD
-
 r=mean(ystd*xstd)
 r
 ```
+
 HeatMap:
 ```{r}
 heatmap(table(glucose, bp), Rowv = NA, Colv = NA)
 ```
+
 Linear model between glucose and BloodPressure:
 
 ```{r}
 lm(bp~glucose)
 ```
+
 Thus The equation of the regression line is
 
       BloodPressure = 60.23 + 0.085 * Glucose
@@ -224,16 +220,13 @@ Thus The equation of the regression line is
 ```{r}
 plot(glucose, bp, xlab = "Glucose (mg/dL)",ylab = "BP (mm Hg)")
 abline(lm(bp~glucose))
-
 ```
 
 Diagram of the Residual
 ```{r}
-
 l = lm( bp ~ glucose)
 plot(glucose, l$residuals,xlab = "Glucose (mg/dL)")
 abline(h=0, col = "red")
-
 ```
 
 
@@ -248,8 +241,6 @@ Insert text and analysis.
 ```{r}
 ## read data 
 forigin = read.csv("data/diabetes.csv")
-
-
 ##remove value = 0 reasonably
 f=data.frame(forigin)
 f<-f[which(forigin$Glucose!=0),]
@@ -260,36 +251,27 @@ f<-f[which(f$BMI!=0),]
 f<-f[which(f$DiabetesPedigreeFunction!=0),]
 f<-f[which(f$Age!=0),]
 rownames(f)<-NULL
-
-
-
 ## show classification of variables
 str(f)
 ins = f$Insulin
 glucose = f$Glucose
-
-
 ```
+
 Insulin:
 ```{r}
 ## write code here
-
-
-
 par(mfrow = c(1,2))
 hist(ins)
 boxplot(ins,horizontal = T)
-
-
 ```
 
 The mean Value of Insulin
 ```{r}
 mean(ins)
 ```
+
 The standard deviation of Insulin
 ```{r}
-
 sd(ins)
 ```
 
@@ -303,6 +285,12 @@ The IQR Value of Insulin
 IQR(ins)
 ```
 
+the rate of people with abnormal Insulin
+```{r}
+abins=data.frame(ins)
+abins <- abins[which(ins>=150),]
+length(abins)/length(ins)
+```
 
 Glucose:
 
@@ -332,22 +320,24 @@ The IQR Value of Glucose
 ```{r}
 IQR(glucose)
 ```
+
 Normal Curve of Glucose:
 ```{r}
 curve(dnorm(x,round(mean(glucose),0),round(sd(glucose),0)),from=0,to=240,ylab="Density",main="Normal Curve of Glucose")
-
 ```
+
 68% people's Glucose is in the range [91, 153]
 ```{r}
 mean(glucose)-sd(glucose)
 mean(glucose)+sd(glucose)
-
 ```
+
 95% people's Glucose is in the range [61, 184]
 ```{r}
 mean(glucose)-2*sd(glucose)
 mean(glucose)+2*sd(glucose)
 ```
+
 99.7% people's Glucose is in the range [30, 215]
 ```{r}
 mean(glucose)-3*sd(glucose)
@@ -356,7 +346,9 @@ mean(glucose)+3*sd(glucose)
 
 the rate of people with abnormal Glucose
 ```{r}
-pnorm(140 ,mean = mean(glucose),sd = sd(glucose),lower.tail = FALSE)
+abglucose=data.frame(glucose)
+abglucose <- abglucose[which(glucose>=140),]
+length(abglucose)/length(glucose)
 ```
 
 
@@ -365,32 +357,33 @@ Insulin and Glucose
 Scatter Plot:
 ```{r}
 plot(glucose,ins)
-
 ```
+
 correlation coefficient
 ```{r}
 xbar=mean(glucose)
 x1=glucose-mean(glucose)
 xSD=sd(glucose)
 xstd=x1/xSD
-
 ybar=mean(ins)
 y1=ins-mean(ins)
 ySD=sd(ins)
 ystd=y1/ySD
-
 r=mean(xstd*ystd)
 r
 ```
+
 HeatMap:
 ```{r}
 heatmap(table(ins,glucose), Rowv = NA, Colv = NA)
 ```
+
 Linear model between ins and glucose:
 
 ```{r}
 lm(ins~glucose)
 ```
+
 Thus The equation of the regression line is
 
       Glucose = -118.41 + 2.24 * BloodPressure
@@ -399,16 +392,13 @@ Thus The equation of the regression line is
 ```{r}
 plot(glucose,ins)
 abline(lm(ins~glucose))
-
 ```
 
 Diagram of the Residual
 ```{r}
-
 l = lm( ins ~ glucose)
 plot(glucose, l$residuals)
 abline(h=0, col = "red")
-
 ```
 
 
