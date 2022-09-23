@@ -138,3 +138,485 @@ par(mfrow = c(1,2))
 hist(BloodPressure,xlab = "BloodPressure (mm Hg)")
 boxplot(BloodPressure,horizontal = T,xlab = "BloodPressure (mm Hg)")
 ```
+
+**1. The mean Value of BloodPressure**
+```{r}
+mean(BloodPressure)
+```
+
+**2. The standard deviation of BloodPressure**
+```{r}
+sd(BloodPressure)
+```
+
+**3. The median Value of BloodPressure**
+```{r}
+median(BloodPressure)
+```
+
+**4. The IQR Value of BloodPressure**
+```{r}
+IQR(BloodPressure)
+```
+
+**5. Normal Curve of BloodPressure:**
+```{r}
+curve(dnorm(x,round(mean(BloodPressure),0),round(sd(BloodPressure),0)),from=0,to=140,ylab="Density",main="Normal Curve of BloodPressure",xlab = "BloodPressure (mm Hg)")
+```
+
+<br>
+
+Judging from the Curve above: 
+
+- 68% people's Blood Pressure is in the range [58, 83]
+```{r}
+mean(BloodPressure)-sd(BloodPressure)
+mean(BloodPressure)+sd(BloodPressure)
+```
+
+- 95% people's Blood Pressure is in the range [46, 96]
+```{r}
+mean(BloodPressure)-2*sd(BloodPressure)
+mean(BloodPressure)+2*sd(BloodPressure)
+```
+
+- 99.7% people's Blood Pressure is in the range [33, 108], and  the rate of people with abnormal Blood Pressure (Hypertension- elevated Bloodpressure)shows:
+```{r}
+mean(BloodPressure)-3*sd(BloodPressure)
+mean(BloodPressure)+3*sd(BloodPressure)
+abbp=data.frame(BloodPressure)
+abbp <- abbp[which(BloodPressure>=90),]
+length(abbp)/length(BloodPressure)
+```
+
+
+
+<br>
+
+***Analysis for BloodPressure:***
+
+- On average, majority of the dataset has blood Pressure below 80 which is relatively low or normal with respect to the standard blood pressure of patients with diabetes (80 upwards) which can pose assumptions in this regard. Additionally, by observing the spread or variation of data, we can estimate that from the dataset, only about 0.3% deviate approximately 36 mm Hg from the mean of around 70 mm Hg.
+
+- High blood pressure has always been one of the many indicators for diabetes- but more so in Type 2 as opposed to Type 1 patients, and to provide an idea of this number- its about 3/10 people with Type 1 diabetes and around 8/10 for those with Type 2 diabetes (Knott, 2020). This means that though someone may have diabetes, if they are Type 1 which is hereditary, then the likeliness of having High blood pressure is small. This can also be used to question why a large number of diabetic patients do not have High Blood Pressure or why one who does not have diabetes has high blood pressure (by observing the Class Outcome column) and this, in turn, can pose as a confounder in the observation of this variable. 
+
+<br> 
+
+To bring this finding into perspective, we observe the BloodPressure of patients with attribute 1 in Class Outcome (Diabetic patients) as opposed to patients without Diabetes ("0") as seen below: 
+
+```{r}
+Outcome = factor(f$Outcome, levels = c("0", "1"))
+boxplot(BloodPressure ~ Outcome, horizontal=T, col=c("green", "red"), main = "Classification (Outcome attribute) by BloodPressure",xlab = "BloodPressure (mm Hg)")
+```
+
+- The above plot also indicates that though those who have Diabetes is higher than those who do not, the difference is very small and only a small variation exceeds 80 mm Hg. Thus why BloodPressure alone may or may not be a strong indicator of Diabetes Mettilus but this can vary depending on what type of diabetes each patient has since those with Type 2 have a greater tendency of High BloodPressure compared to those of Type 1 (Knott, 2020). 
+
+<br>
+
+**B) Glucose:**
+
+```{r}
+## write code here
+par(mfrow = c(1,2))
+hist(Glucose, xlab = "Glucose (mg/dL)")
+boxplot(Glucose,horizontal = T, xlab = "Glucose (mg/dL)")
+```
+
+**1. The mean Value of Glucose**
+```{r}
+mean(Glucose)
+```
+
+**2. The standard deviation of Glucose**
+```{r}
+sd(Glucose)
+```
+
+**3. The median Value of Glucose**
+```{r}
+median(Glucose)
+```
+
+**4. The IQR Value of Glucose**
+```{r}
+IQR(Glucose)
+```
+
+**5. Normal Curve of Glucose:**
+```{r}
+curve(dnorm(x,round(mean(Glucose),0),round(sd(Glucose),0)),from=0,to=240,ylab="Density",main="Normal Curve of Glucose", xlab = "Glucose (mg/dL)")
+```
+
+<br>
+
+From the curve above we can see that: 
+
+- 68% people's Glucose is in the range [91, 153]
+```{r}
+mean(Glucose)-sd(Glucose)
+mean(Glucose)+sd(Glucose)
+```
+
+- 95% people's Glucose is in the range [61, 184]
+```{r}
+mean(Glucose)-2*sd(Glucose)
+mean(Glucose)+2*sd(Glucose)
+```
+
+- 99.7% people's Glucose is in the range [30, 215] and the rate of people with abnormal Glucose:
+```{r}
+mean(Glucose)-3*sd(Glucose)
+mean(Glucose)+3*sd(Glucose)
+abglucose=data.frame(Glucose)
+abglucose <- abglucose[which(Glucose>=140),]
+length(abglucose)/length(Glucose)
+```
+
+
+
+***Analysis for Glucose:***
+
+- By calculating the mean of the Glucose variable, we are able to also depict that majority of the dataset subjects have Glucose levels that are below that of critical or glucose levels of those who have Diabetes in accordance to medical standards. To recall, diabetic patients have OGTT of 140-199 mg/dL whereas the data has a mean of about 122 mg/dL and a variation (sd) of about 31. On another note, by using the 68% 95% 99.7% rule, we can state that only about 0.3% of this dataset deviates approximately 31 mm/dL from the mean. 
+
+- However, if we further investigate this attribute, we can observe the distribution of the patients with Diabetes and those without diabetes with respect to their spread of Glucose Plasma Levels. 
+
+```{r}
+Outcome = factor(f$Outcome, levels = c("0", "1"))
+boxplot(Glucose ~ Outcome, horizontal=T, col=c("green", "red"), main = "Classification (Outcome attribute by Glucose ", xlab = "Glucose (mg/dL)")
+```
+<br>
+
+- From the comparison shown above, we can say that the differences between the Glucose levels between Diabetic and Non-Diabetic patients are vast and though the mean value is relatively low, this can only be a reflection of the ***Simpson's Paradox*** which simply means that when grouped together, values of Non-Diabetics have a major impact on the aggregate of itself and those of Diabetic patients.
+
+- The data above also proves that exceeding glucose levels is a major/main causal factor of Diabetes regardless of the Type.
+
+<br>
+
+### Glucose vs BloodPressure
+
+**1. Scatter Plot:** 
+```{r}
+plot(Glucose, BloodPressure, xlab = "Glucose (mg/dL)",ylab = "BloodPressure (mm Hg)")
+```
+
+**Correlation coefficient**
+```{r}
+ybar=mean(BloodPressure)
+y1=BloodPressure-mean(BloodPressure)
+ySD=sd(BloodPressure)
+ystd=y1/ySD
+xbar=mean(Glucose)
+x1=Glucose-mean(Glucose)
+xSD=sd(Glucose)
+xstd=x1/xSD
+r=mean(ystd*xstd)
+r
+```
+
+***Analysis for the scatter plot:***
+
+Because the correlation coefficient is 0.2, this means that the correlation between glucose and blood pressure is not obvious, but we can still slightly observe from the figure that as glucose increases, more points are distributed in places where blood pressure is higher.
+
+**2. HeatMap:**
+```{r}
+heatmap(table(BloodPressure, Glucose), Rowv = NA, Colv = NA, xlab = "Glucose (mg/dL)", ylab = "BloodPressure (mm Hg)")
+```
+
+<br>
+
+***Analysis for the HeatMap:***
+
+- After carefully observing the heat map, we found that the dark red color block appear higher as the value increases, which means that higher blood pressure will be accompanied by higher glucose.
+
+**3. Linear model between glucose and BloodPressure:**
+
+```{r}
+lm(BloodPressure~Glucose)
+```
+
+Thus The equation of the regression line is
+
+      BloodPressure = 60.23 + 0.085 * Glucose
+      
+      
+```{r}
+plot(Glucose, BloodPressure, xlab = "Glucose (mg/dL)",ylab = "BloodPressure (mm Hg)")
+abline(lm(BloodPressure~Glucose))
+```
+
+***Analysis for the linear model:***
+
+- It is not difficult to conclude from the figure that with the increase of glucose, blood pressure shows a slight upward trend.
+
+**4. Diagram of the Residual**
+```{r}
+l = lm( BloodPressure ~ Glucose)
+plot(Glucose, l$residuals,xlab = "Glucose (mg/dL)")
+abline(h=0, col = "red")
+```
+
+***Analysis for the residual diagram:***
+
+- From the residual diagram, we can see that the points we plot around the line with residual equal to 0 are randomly scattered up and down, indicating that the regression line fits the original observations well.
+
+### Analysis for this relationship between Glucose and BloodPressure
+
+- The correlation between these two variables as calculated from the Scatterplot and linear model tells us that there is indeed a positive correlation between the two-  though small;This simply indicates that when the BloodPressure increases along the axis, the Glucose level also increases.   
+
+- The same can be seen from the HeatMap data representation where the higher blood pressure will be accompanied by higher glucose.
+
+- Therefore, we can infer that with the increase of glucose content in the human body, there will be a slight upward trend in human blood pressure- regardless of the diabetic type. This may be because when the blood glucose in the human body increases, the blood will become more viscous and the blood flow with more resistance, resulting in increased blood pressure. Meanwhile, the residual diagram also confirms that our model are reasonable.
+
+
+<br>
+
+## Research Question 2: What is the relation between Insulin and Glucose
+
+- As explained earlier, Insulin is a hormone that helps our body digest the blood sugar in order to produce energy, However, for a diabetic patient, lack of insulin or lack of insulin usage is its main causal factor for sugar accumulation in the bloodstream, thus- Diabetes. Insulin shortage can be dangerous for both Types of Diabetes and by this information alone, we can hypothesize the relationship between Insulin and Glucose.  
+
+- In accordance to medical observations, those with insulin levels higher than **276 mu U/ml** after fasting are the most susceptible to developing Diabetes (Lillioja et al., 1993).  
+
+```{r}
+## read data 
+forigin = read.csv("data/diabetes.csv")
+##remove value = 0 reasonably
+f=data.frame(forigin)
+f<-f[which(forigin$Glucose!=0),]
+f<-f[which(f$BloodPressure!=0),]
+f<-f[which(f$SkinThickness!=0),]
+f<-f[which(f$Insulin!=0),]
+f<-f[which(f$BMI!=0),]
+f<-f[which(f$DiabetesPedigreeFunction!=0),]
+f<-f[which(f$Age!=0),]
+rownames(f)<-NULL
+## show classification of variables
+str(f)
+Insulin = f$Insulin
+Glucose = f$Glucose
+Outcome = factor(f$Outcome, levels = c("0", "1"))
+```
+
+***A) Insulin:***
+<br>
+
+From the graphical summaries below, we can see that the Insulin range is from 0-200 (Histogram) but further observations of the Measures of Spread and Central Tendency shows the following:
+```{r}
+## write code here
+par(mfrow = c(1,2))
+hist(Insulin, xlab = "Insulin(mu U/ml)")
+boxplot(Insulin,horizontal = T, xlab = "Insulin(mu U/ml)")
+```
+
+**1. The mean Value of Insulin**
+```{r}
+mean(Insulin)
+```
+
+**2. The standard deviation of Insulin**
+```{r}
+sd(Insulin)
+```
+
+**3. The median Value of Insulin**
+```{r}
+median(Insulin)
+```
+
+**4. The IQR Value of Insulin** 
+```{r}
+IQR(Insulin)
+```
+
+**5. the rate of people with abnormal Insulin**
+```{r}
+abins=data.frame(Insulin)
+abins <- abins[which(Insulin>=150),]
+length(abins)/length(Insulin)
+```
+***Analysis for Insulin:*** 
+
+- The mean obtained from the dataset tells us that majority of the samples have insulin levels around **156 mu u/ml**, which by standard is lower than the number for those who have diabetes. This then proves statement by *M. Regina Castro (2020)* that High Insulin tests alone cannot mean Diabetes. Again, the spread shows us that from the mean, only about 0.3% deviates about **119 mu U/ml** from the mean of about **156 mu U/ml**. 
+
+- However, further observation into this attribute between Diabetic and Non-Diabetic shows that:
+
+```{r}
+
+boxplot(Insulin ~ Outcome, horizontal = T, col= c("green", "red"), main = "Classification (Outcome attribute) by Insulin", xlab = "Insulin(mu U/ml)")
+```
+
+<br>
+
+- There is a variation between the two classifications when it comes to Insulin levels, thus proving that exceeding levels of Insulin also induces Glucose accumulation in the bloodstream which in turn contributes to Diabetes development.
+
+- However, it is important to also note that for both grouped data, their maximum values were still relatively smaller or lower than the standard degree of diabetic implication through the insulin serum test which can mean one of two things: either majority of the diabetic patients had fasted for more than 2 hours (before testing) which led to significant lowering of insulin levels throughout the Insulin serum test or either majority are Type 1 diabetes which has a lower likeliness of high Insulin levels (Watson, 2021).  
+
+
+***B) Glucose:***
+
+```{r}
+## write code here
+par(mfrow = c(1,2))
+hist(Glucose, xlab = "Glucose (mg/dL)")
+boxplot(Glucose,horizontal = T, xlab = "Glucose (mg/dL)")
+```
+
+**1. The mean Value of Glucose**
+```{r}
+mean(Glucose)
+```
+
+**2. The standard deviation of Glucose**
+```{r}
+sd(Glucose)
+```
+
+**3. The median Value of Glucose**
+```{r}
+median(Glucose)
+```
+
+**4. The IQR Value of Glucose**
+```{r}
+IQR(Glucose)
+```
+
+**5. Normal Curve of Glucose:** 
+```{r}
+curve(dnorm(x,round(mean(Glucose),0),round(sd(Glucose),0)),from=0,to=240,ylab="Density",main="Normal Curve of Glucose", xlab = "Glucose (mg/dL)")
+```
+
+68% people's Glucose is in the range [91, 153]
+```{r}
+mean(Glucose)-sd(Glucose)
+mean(Glucose)+sd(Glucose)
+```
+
+95% people's Glucose is in the range [61, 184]
+```{r}
+mean(Glucose)-2*sd(Glucose)
+mean(Glucose)+2*sd(Glucose)
+```
+
+99.7% people's Glucose is in the range [30, 215]
+```{r}
+mean(Glucose)-3*sd(Glucose)
+mean(Glucose)+3*sd(Glucose)
+```
+
+the rate of people with abnormal Glucose
+```{r}
+abglucose=data.frame(Glucose)
+abglucose <- abglucose[which(Glucose>=140),]
+length(abglucose)/length(Glucose)
+```
+
+
+### Insulin vs Glucose
+
+**1. Scatter Plot:**
+```{r}
+plot(Glucose,Insulin, xlab = "Glucose (mg/dL)", ylab = "Insulin(mu U/ml)")
+```
+
+**Correlation coefficient**
+```{r}
+xbar=mean(Glucose)
+x1=Glucose-mean(Glucose)
+xSD=sd(Glucose)
+xstd=x1/xSD
+ybar=mean(Insulin)
+y1=Insulin-mean(Insulin)
+ySD=sd(Insulin)
+ystd=y1/ySD
+r=mean(xstd*ystd)
+r
+```
+
+***Analysis for the scatter plot:***
+
+- From the scatter plot, we can clearly find that as the glucose rises, more points are distributed in the places where the insulin of the human body is higher. This proves the individual observations of the variable as well as medical understanding that Glucose Plasma Levels are directly proportional to Insulin levels. 
+
+**2. HeatMap:**
+```{r}
+heatmap(table(Insulin,Glucose), Rowv = NA, Colv = NA, xlab = " Glucose (mg/dL)" , ylab = "Insulin(mu U/ml)")
+```
+
+***Analysis for the HeatMap:***
+
+- From the heatmap we can observe that as the glucose value increases, more color blocks are distributed where the insulin value is also higher.
+
+**3. Linear model between ins and glucose:**
+
+```{r}
+lm(Insulin~Glucose)
+```
+
+Thus The equation of the regression line is
+
+      Glucose = -118.41 + 2.24 * BloodPressure
+      
+      
+```{r}
+plot(Glucose,Insulin, xlab = "Glucose (mg/dL)", ylab = "Insulin(mu U/ml)")
+abline(lm(Insulin~Glucose))
+```
+
+***Analysis for the linear model:***
+
+- From the regression line we drew, the insulin content in the human body will increase with the increase of glucose. Therefore they are directly proportional and have a positive correlation.
+
+**4. Diagram of the Residual**
+```{r}
+l = lm( Insulin ~ Glucose)
+plot(Glucose, l$residuals, xlab = "Glucose (mg/dL)")
+abline(h=0, col = "red")
+```
+
+***Analysis for the residual diagram:***
+
+- From the residual diagram, we can see that the points we plot around the line with residual equal to 0 are randomly scattered up and down, indicating that the regression line fits the original observations well.
+
+<br>
+
+### Analysis for this relationship between Insulin and Glucose
+
+- From the above figures, we can easily find that when the glucose level in the human body increases, the insulin level will also increase. This may be because the main function of insulin is to control the level of blood in the blood after eating. It could prevents glucose from staying in the bloodstream and causes blood glucose to rise by telling cells to absorb glucose as it comes in. 
+
+- Again, it shows connectivity between genetic susceptibility of Diabetes to appear in Pima Indians, even when compared to other races such as Causassions of similar degrees of glucose tolerance as observed in a data analysis written by Charles et al.,(1997) who concluded that Pima Indians are highly insulin-resistant thus induces high glucose accumulation in their bloodstream.  
+
+## Conslusion
+
+In culmination, we can state that by observing the following variables: *Glucose, BloodPressure, Insulin* and the *Outcome* Attribute of Pima Indian females of above 21 years of age, we can also infer that: 
+
+- ***BloodPressure*** in this regard is a more unlikely indicator of a person having Diabetes- especially with this dataset. However, because we cannot identify whether a person has Type 1 or Type 2 diabetes mellitus, we can assume that this conclusion means that majority who were diagnoses were of Type 1 diabetes. 
+
+- ***Glucose*** is the main or a major attribute to Diabetes regardless of the Type classification. It was through this singular observation that we were able to see the clear variation between females with Diabetes and those who do not have Diabetes and when plotted against variables- Insulin and BloodPressure, there was a clear positive correlation though it was small for BloodPressure. 
+
+- ***Insulin*** has been defined to go hand in hand with Glucose levels since through medical observations, its the tendency of a person's system to resist the usage of Insulin for sugar breakdown is the what causes Diabetes for both Type 1 and 2. 
+
+Through this investigation, we were also able to:
+
+- Determine the line of regression as well as the correlation coefficient between the observed attributes where both indications showed positive correlations and had proved that each variable is directly proportional to the other. 
+
+- Though Pima Indians are known to have a higher prevalence of Diabetes throughout generations- widely hereditary, we were able to see an indication of that throughout the dataset such as BloodPressure levels being relative lower in the Diabetic group- hence proving that those with Type 1 diabetes (genetics) have a lower prospect of having BloodPressure (Knott, 2020) as opposed to those with Type 2 Diabetes. Additionally, insulin levels of Type 1 diabetics has to do more with the less production of insulin (lower insulin levels) rather than high insulin levels as seen in Type 2 patients (Watson, 2021) as depicted from the data above. 
+
+# List of References:
+
+- Canopy Health. (2018). Understanding the Relationship between High bloodPressure and Type 2 Diabetes. *Health and Wellness*, https://www.canopyhealth.com/understanding-the-relationship-between-high-blood-pressure-and-type-2-diabetes.  
+
+- Charles, M. A., Eshwege, E., Bennett, P. H. (1997). Non-insulin-dependent diabetes in populations at risk: the Pima Indians. *Diabetes & Metabolism, 23Suppl 4*, 6-9. 
+
+- Das, R., N. (2014). Determinants of Diabetes Mellitus in the Pima Indian Mothers and Indian Medical Students. *The Open Diabetes Journal*, *7*(1), 5-13. https://doi.org/10.2174/187652460140701005 
+
+- Knowler, W. C., Nelson, R. G., Saad, M. F., Bennt, P. H., Pettitt, D. J.(1993). Determinants of Diabetes Mellitus in the Pima Indians. *Diabetes Care*, *16*(1), 216-227. https://doi.org/10.2337/diacare.16.1.216 
+
+- Lillioja, S., Mott, D. M., Spraul, M., Ferraro, R., Foley, J. E., Knowler, W. C. ...Bogardus, C. (1993). Insulin Resistance and Insulin Secretory Dysfunction as Precursors of Non-Insulin-Dependent Diabetes Mellitus:           Prospect Studies of Pima Indian. *The New England Journal of Medicine*, *329*(27), 1988-1992. https://doi.org/10.1056/NEJM199312303292703 
+
+- Mayo Clinic. (Dec 2020). Hyperinsulinemia: Is it diabetes?. https://protect-au.mimecast.com/s/vJdLCmO5glu5MBN5mSGd_EW?domain=mayoclinic.org 
+
+- Smith, J. W., Evenhart, J. E., Dickson, W. C., Knowler, W. C., Johannes, R. S., (1998). Using the ADAP Learning Algorithm tp Forecast the Onset of Diabetes Mellitus.*Proceedings of the Annual Symposium on Computer              Application in Medical Care*, 261-265.
+
+- Watson, S. (March 2021). How Insulin Treatment Lowers your blood sugar. *Diabetes Treatment Home*, https://protect-au.mimecast.com/s/TNZvCP7LAXf468RQYhzSfTq?domain=webmd.com  
+
+
+
+
